@@ -1,4 +1,5 @@
 ﻿using MorfoServices;
+using System.Text;
 
 namespace Morfologija
 {
@@ -7,7 +8,7 @@ namespace Morfologija
         public LietVards(string nosaukums) : base(nosaukums)
         {
             if (String.IsNullOrEmpty(Galotne))
-                throw new ArgumentException($" Ievadītājs vārds nav atbilst programmas specifikācijām ");
+                throw new ArgumentException($" Ievadītājs vārds ir tukšs. ");
 
             switch (Galotne)
             {
@@ -59,20 +60,22 @@ namespace Morfologija
         public Deklinacija Deklinacija { get; protected set; }
         
 
-        public override void Locisana()
+        public override String Locisana()
         {
+            StringBuilder stringBuilder = new StringBuilder();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            Console.WriteLine($"             Lietvārdu \"{Nosaukums}\" {this.Deklinacija.Name} locīšana");
-            Console.WriteLine("                 Vienskaitlis   Daudzskaitlis");
+            stringBuilder.AppendLine($"             Lietvārdu \"{Nosaukums}\" {this.Deklinacija.Name} locīšana");
+            stringBuilder.AppendLine("                 Vienskaitlis   Daudzskaitlis");
             foreach (Locijumi locijums in Enum.GetValues(typeof(Locijumi)))
             {
-                if ( locijums != Locijumi.Dativs)
-                    Console.WriteLine($"{locijums.GetDescription()}          {GetEnding(locijums, (Skaitlis)1)}          {GetEnding(locijums, (Skaitlis)2)} ");
+                if (locijums != Locijumi.Dativs)
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}      {this.Sakne}{GetEnding(locijums, (Skaitlis)1)}          {this.Sakne}{GetEnding(locijums, (Skaitlis)2)} ");
                 if (locijums == Locijumi.Dativs)
-                    Console.WriteLine($"{locijums.GetDescription()}          {GetEnding(locijums, (Skaitlis)1)}         {GetEnding(locijums, (Skaitlis)2)} ");
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}      {this.Sakne}{GetEnding(locijums, (Skaitlis)1)}         {this.Sakne}{GetEnding(locijums, (Skaitlis)2)} ");
             }
-            
-        }
+            return stringBuilder.ToString();
+
+        }        
 
         public string GetEnding(Locijumi locijums)
         {

@@ -1,4 +1,5 @@
 ﻿using MorfoServices;
+using System.Text;
 
 namespace Morfologija
 {
@@ -10,20 +11,28 @@ namespace Morfologija
 
         public IpasibasGalotne IpasibasGalotne { get;  set; }
 
-        public override void Locisana()
+        public override String Locisana()
         {
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
-            Console.WriteLine($"                                  Īpašības vārdu \"{Nosaukums}\" locīšana");
-            Console.WriteLine("                       Vienskaitlis                    Daudzskaitlis");
-            Console.WriteLine("               Vīriešu dzimt.  Sieviešu dzimt.   Vīriešu dzimt.  Sieviešu dzimt.");
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"                                  Īpašības vārdu \"{Nosaukums}\" locīšana");
+            stringBuilder.AppendLine("                       Vienskaitlis                    Daudzskaitlis");
+            stringBuilder.AppendLine("               Vīriešu dzimt.  Sieviešu dzimt.   Vīriešu dzimt.  Sieviešu dzimt.");
             foreach (Locijumi locijums in Enum.GetValues(typeof(Locijumi)))
             {
-                if(locijums!=Locijumi.Vokativs && locijums != Locijumi.Dativs)
-                    Console.WriteLine($"{locijums.GetDescription()}      {GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}             {GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}                 {GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}                   {GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
+                if (locijums == Locijumi.Nominativs)
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}   {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}       {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}             {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}                {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
+                if (locijums == Locijumi.Genitivs)
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}   {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}       {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}            {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}                {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
                 if (locijums == Locijumi.Dativs)
-                    Console.WriteLine($"{locijums.GetDescription()}      {GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}            {GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}                {GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}                 {GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}   {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}      {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}            {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}              {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
+                if (locijums == Locijumi.Instrumentalis)
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}   {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}       {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}             {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}              {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
+
+                if (locijums == Locijumi.Akuzativs || locijums == Locijumi.Lokativs)
+                    stringBuilder.AppendLine($"{locijums.GetDescription()}   {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)1)}       {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)1)}             {this.Sakne}{GetEnding(locijums, (Dzimtene)1, (Skaitlis)2)}               {this.Sakne}{GetEnding(locijums, (Dzimtene)2, (Skaitlis)2)}  ");
             }
-        }
+            return stringBuilder.ToString();
+        }        
 
         public string GetEnding(Locijumi locijums,Dzimtene dzimtene, Skaitlis skaitlis)
         {

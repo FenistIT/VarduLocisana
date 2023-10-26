@@ -6,6 +6,7 @@
         {
             Nosaukums = nosaukums;
             Galotne = GetGalotne();
+            Sakne=GetSakne();
         }
 
 
@@ -17,9 +18,11 @@
 
         public Locijumi Locijums { get; set; }
 
+        public String Sakne { get; protected set; } 
+
         public String Galotne { get; protected set; }
 
-        public abstract void Locisana();
+        public abstract String Locisana();        
 
         private string GetGalotne()
         {
@@ -37,8 +40,17 @@
                 return "a";
             if (Nosaukums.EndsWith("e"))
                 return "e";
+            if (Nosaukums.EndsWith("īgs"))
+                return "īgs";
+            if (Nosaukums.EndsWith("āks"))
+                return "āks";
             return String.Empty;
 
+        }
+
+        private string GetSakne()
+        {
+            return Nosaukums.Substring(0,Nosaukums.Length-Galotne.Length); 
         }
 
     }

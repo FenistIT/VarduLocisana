@@ -2,7 +2,7 @@
 {
     public static class VarduAnalizators
     {
-        static List<string> ipasibasVarduVardnica=new List<string> { "skaists","prieks","lielāks","saulains","milzīgs"};
+        static List<string> ipasibasVarduVardnica=new List<string> { "skaists","priecīgs","lielāks","saulains","milzīgs", "valdzinošs","labvēlīgs" };
         public static Vards VarduDefinicija(string nosaukums)
         {            
             if (ipasibasVarduVardnica.Contains(nosaukums.ToLower()))
