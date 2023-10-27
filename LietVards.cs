@@ -62,16 +62,14 @@ namespace Morfologija
 
         public override String Locisana()
         {
+            var padlength = 15 - Sakne.Length;
             StringBuilder stringBuilder = new StringBuilder();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             stringBuilder.AppendLine($"             Lietvārdu \"{Nosaukums}\" {this.Deklinacija.Name} locīšana");
-            stringBuilder.AppendLine("                 Vienskaitlis   Daudzskaitlis");
+            stringBuilder.AppendLine("                 Vienskaitlis     Daudzskaitlis");            
             foreach (Locijumi locijums in Enum.GetValues(typeof(Locijumi)))
-            {
-                if (locijums != Locijumi.Dativs)
-                    stringBuilder.AppendLine($"{locijums.GetDescription()}      {this.Sakne}{GetEnding(locijums, (Skaitlis)1)}          {this.Sakne}{GetEnding(locijums, (Skaitlis)2)} ");
-                if (locijums == Locijumi.Dativs)
-                    stringBuilder.AppendLine($"{locijums.GetDescription()}      {this.Sakne}{GetEnding(locijums, (Skaitlis)1)}         {this.Sakne}{GetEnding(locijums, (Skaitlis)2)} ");
+            {               
+                stringBuilder.AppendLine($"{locijums.GetDescription().PadRight(padlength)}     {this.Sakne}{GetEnding(locijums, (Skaitlis)1).PadRight(padlength)} {this.Sakne}{GetEnding(locijums, (Skaitlis)2)} ");             
             }
             return stringBuilder.ToString();
 

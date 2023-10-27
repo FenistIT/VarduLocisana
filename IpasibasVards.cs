@@ -14,7 +14,7 @@ namespace Morfologija
         public override String Locisana()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"                                  Īpašības vārdu \"{Nosaukums}\" locīšana");
+            stringBuilder.AppendLine($"                   Īpašības vārdu \"{Nosaukums}\" locīšana nenoteiktā galotne");
             stringBuilder.AppendLine("                       Vienskaitlis                    Daudzskaitlis");
             stringBuilder.AppendLine("               Vīriešu dzimt.  Sieviešu dzimt.   Vīriešu dzimt.  Sieviešu dzimt.");
             foreach (Locijumi locijums in Enum.GetValues(typeof(Locijumi)))
